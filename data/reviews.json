@@ -1,11 +1,19 @@
 {
-  "updated_at": "2026-04-28T18:34:36.022Z",
+  "updated_at": "2026-04-28T18:46:38.746Z",
   "source": "google_places_api",
   "place_id": "ChIJC3OUBQB9yUARjQBVWi-ZR1Q",
   "place_name": "SOHA BARBERSHOP",
   "rating": 5,
-  "user_ratings_total": 6,
+  "user_ratings_total": 7,
   "reviews": [
+    {
+      "author_name": "Ion Pereu",
+      "rating": 5,
+      "relative_time_description": "меньше недели назад",
+      "text": "Отличный барбершоп! Очень приятная атмосфера. Мастера настоящие профессионалы учитывают все пожелания и дают полезные советы по уходу за волосами и бородой. Всегда ухожу довольным результатом. Рекомендую всем, кто ценит качество и хороший сервис!",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocKyccVCtg6oKJhjoiIBoylDxKxzneT9V2BVuhR2_a7iCG7fxQ=s128-c0x00000000-cc-rp-mo",
+      "time": "2026-04-28T18:45:25.540547050Z"
+    },
     {
       "author_name": "Anita Vieru",
       "rating": 5,
@@ -29,14 +37,6 @@
       "text": "Местяк кайф, мастера суперские. Если думаете идти или не идти, не думайте - идите! Пришел очень патлатый, ушел человеком! Обязательно вернусь:)",
       "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjXrTfDmZOtqF5Qru1UBw0TlN1G96fNogjvY5YiTuEQD04lnHFeZ=s128-c0x00000000-cc-rp-mo",
       "time": "2026-04-09T20:53:02.236404306Z"
-    },
-    {
-      "author_name": "DANU NA",
-      "rating": 5,
-      "relative_time_description": "2 недели назад",
-      "text": "Идеальная атмосфера",
-      "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocJ5UjkDX0C0DUALl4VfCAJcBqLgt2RKIruP3TS79J7rWCCEFA=s128-c0x00000000-cc-rp-mo",
-      "time": "2026-04-09T17:58:38.014053900Z"
     },
     {
       "author_name": "Никита Урсу",
