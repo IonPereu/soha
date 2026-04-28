@@ -1,8 +1,50 @@
 {
-  "updated_at": "2026-04-28T17:12:50Z",
+  "updated_at": "2026-04-28T18:34:36.022Z",
   "source": "google_places_api",
-  "place_id": "",
+  "place_id": "ChIJC3OUBQB9yUARjQBVWi-ZR1Q",
   "place_name": "SOHA BARBERSHOP",
-  "reviews": []
+  "rating": 5,
+  "user_ratings_total": 6,
+  "reviews": [
+    {
+      "author_name": "Anita Vieru",
+      "rating": 5,
+      "relative_time_description": "меньше недели назад",
+      "text": "Самая классная команда которую когда либо видела в Кишиневе. Каждый барбер уникален и профессионал в своем деле. Атмосфера и обслуживание на высшем уровне. Кофе (капучино, эспрессо, американо ) просто Перфекто 👌. Особое внимание хочу обратить на фэйды которые делают барбер Расул и Николай, нуу просто бомбические 💣, на столько они Перфекционисты в этом плане. Все стрижки реализованы как с обложки дорогого журнала. 🥇Очень рекомендую это место. Не пожалеете, гарантирую, уйдете с офигительной стрижкой и настроением.",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjVBSksqye9n0Y0OkVJ84RyOQKyP8mjQh6iuUedIDuCO4ISoiU6l=s128-c0x00000000-cc-rp-mo",
+      "time": "2026-04-24T16:06:25.700991929Z"
+    },
+    {
+      "author_name": "Friptu Alexandru",
+      "rating": 5,
+      "relative_time_description": "меньше недели назад",
+      "text": "Лучшее!",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjXt8nN6NRNA2w0I_8f-HZRSj9z8TyD1gnr-q2on_u3y0IN6ObB6Qg=s128-c0x00000000-cc-rp-mo",
+      "time": "2026-04-24T07:41:34.619962515Z"
+    },
+    {
+      "author_name": "Kostiantyn Butuzov",
+      "rating": 5,
+      "relative_time_description": "2 недели назад",
+      "text": "Местяк кайф, мастера суперские. Если думаете идти или не идти, не думайте - идите! Пришел очень патлатый, ушел человеком! Обязательно вернусь:)",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjXrTfDmZOtqF5Qru1UBw0TlN1G96fNogjvY5YiTuEQD04lnHFeZ=s128-c0x00000000-cc-rp-mo",
+      "time": "2026-04-09T20:53:02.236404306Z"
+    },
+    {
+      "author_name": "DANU NA",
+      "rating": 5,
+      "relative_time_description": "2 недели назад",
+      "text": "Идеальная атмосфера",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocJ5UjkDX0C0DUALl4VfCAJcBqLgt2RKIruP3TS79J7rWCCEFA=s128-c0x00000000-cc-rp-mo",
+      "time": "2026-04-09T17:58:38.014053900Z"
+    },
+    {
+      "author_name": "Никита Урсу",
+      "rating": 5,
+      "relative_time_description": "3 недели назад",
+      "text": "Отличное место, вкусное кофе, отличная музыка и классные мастера.",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocJ6dw97WCGxfuw9RC9Y2mKAaJqVUmw6EakGH9Me13Qstg6gcg=s128-c0x00000000-cc-rp-mo-ba3",
+      "time": "2026-04-07T11:28:11.149137969Z"
+    }
+  ]
 }
-
