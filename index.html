@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="description" content="SOHA — мужской барбершоп без суеты: стрижка, борода, комплекс. Ровные линии, спокойный свет, запись в пару кликов." />
+  <meta name="theme-color" content="#030303" />
+  <title>SOHA — барбершоп</title>
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ink: "#030303",
+            surface: "#080808",
+            elevated: "#0e0e0e",
+            muted: "#8a8a8a",
+            line: "rgba(255,255,255,0.055)",
+            accent: "#ebeae8",
+            wire: "#b5a27a",
+          },
+          fontFamily: {
+            display: ['"Syne"', "system-ui", "sans-serif"],
+            sans: ['"DM Sans"', "system-ui", "sans-serif"],
+          },
+          animation: {
+            "fade-up": "fadeUp 0.75s cubic-bezier(0.22,1,0.36,1) forwards",
+            "fade-in": "fadeIn 0.6s ease-out forwards",
+            drift: "drift 18s ease-in-out infinite alternate",
+          },
+          keyframes: {
+            fadeUp: {
+              "0%": { opacity: "0", transform: "translateY(28px)" },
+              "100%": { opacity: "1", transform: "translateY(0)" },
+            },
+            fadeIn: {
+              "0%": { opacity: "0" },
+              "100%": { opacity: "1" },
+            },
+            drift: {
+              "0%": { transform: "translate(0, 0) scale(1)" },
+              "100%": { transform: "translate(-2%, 1%) scale(1.03)" },
+            },
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    html {
+      scroll-padding-top: 5.5rem;
+    }
+    .noise {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      pointer-events: none;
+      opacity: 0.045;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='280'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+    .hero-bleed {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 55% at 70% 20%, rgba(181, 162, 122, 0.09), transparent 55%),
+        radial-gradient(ellipse 60% 40% at 10% 90%, rgba(255, 255, 255, 0.04), transparent 50%),
+        linear-gradient(165deg, rgba(3, 3, 3, 0.88) 0%, rgba(3, 3, 3, 0.72) 45%, #030303 100%);
+    }
+    .hero-clip {
+      clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 2.75rem));
+    }
+    @media (min-width: 768px) {
+      .hero-clip {
+        clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 4.5rem));
+      }
+    }
+    .gallery-item {
+      overflow: hidden;
+    }
+    .gallery-item img {
+      transition: transform 0.85s cubic-bezier(0.22, 1, 0.36, 1), filter 0.5s ease, opacity 0.5s ease;
+    }
+    .gallery-item:hover img {
+      transform: scale(1.05);
+      filter: brightness(1.05) contrast(1.02);
+    }
+    .gallery-offset:hover {
+      transform: translateY(-4px);
+    }
+    .gallery-offset {
+      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.75s cubic-bezier(0.22, 1, 0.36, 1), transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .nav-link {
+      position: relative;
+      padding-bottom: 2px;
+    }
+    .nav-link::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 1px;
+      background: linear-gradient(90deg, #b5a27a, rgba(181, 162, 122, 0));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .nav-link:hover::before {
+      transform: scaleX(1);
+    }
+    .btn-wire {
+      transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, transform 0.2s ease;
+    }
+    .btn-wire:hover {
+      transform: translateY(-1px);
+    }
+    .btn-wire:active {
+      transform: translateY(0);
+    }
+    .section-label {
+      letter-spacing: 0.42em;
+    }
+  </style>
+</head>
+<body class="bg-ink font-sans text-accent antialiased selection:bg-wire/30 selection:text-white pb-[5.25rem] md:pb-0">
+  <div class="noise" aria-hidden="true"></div>
+
+  <header
+    id="site-header"
+    class="fixed inset-x-0 top-0 z-50 border-b border-line/80 bg-ink/70 backdrop-blur-2xl transition-[box-shadow,background-color,border-color] duration-500"
+  >
+    <div class="mx-auto flex h-[3.75rem] max-w-[88rem] items-center justify-between gap-4 px-4 sm:h-16 sm:px-6 lg:px-10">
+      <a href="#hero" class="group flex shrink-0 items-center gap-3" aria-label="SOHA — на главную">
+        <span class="hidden h-10 w-px self-center bg-gradient-to-b from-transparent via-wire/50 to-transparent sm:h-12 md:h-[3.35rem]" aria-hidden="true"></span>
+        <img
+          src="assets/logo.png"
+          alt="SOHA BARBERSHOP"
+          width="220"
+          height="72"
+          class="h-10 w-auto transition duration-300 group-hover:opacity-85 sm:h-12 md:h-[3.35rem]"
+          loading="eager"
+        />
+      </a>
+      <nav class="hidden items-center gap-1 text-[13px] font-medium uppercase tracking-[0.18em] text-muted md:flex" aria-label="Основная навигация">
+        <a class="nav-link px-3 py-2 text-accent/80 hover:text-accent" href="#services">Услуги</a>
+        <span class="text-line px-0.5 text-[10px]" aria-hidden="true">·</span>
+        <a class="nav-link px-3 py-2 text-accent/80 hover:text-accent" href="#gallery">Галерея</a>
+        <span class="text-line px-0.5 text-[10px]" aria-hidden="true">·</span>
+        <a class="nav-link px-3 py-2 text-accent/80 hover:text-accent" href="#about">О нас</a>
+        <span class="text-line px-0.5 text-[10px]" aria-hidden="true">·</span>
+        <a class="nav-link px-3 py-2 text-accent/80 hover:text-accent" href="#reviews">Отзывы</a>
+        <span class="text-line px-0.5 text-[10px]" aria-hidden="true">·</span>
+        <a class="nav-link px-3 py-2 text-accent/80 hover:text-accent" href="#contact">Контакты</a>
+      </nav>
+      <div class="flex items-center gap-2 sm:gap-3">
+        <a
+          href="https://n1417559.alteg.io/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-wire hidden items-center border border-wire/70 bg-transparent px-5 py-2.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-accent transition hover:border-wire hover:bg-wire/10 sm:inline-flex"
+        >
+          Записаться
+        </a>
+        <button
+          type="button"
+          id="menu-toggle"
+          class="inline-flex h-11 w-11 items-center justify-center border border-line text-accent transition hover:border-wire/40 hover:text-wire md:hidden"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+          aria-label="Открыть меню"
+        >
+          <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="square" stroke-width="1.5" d="M4 7h16M4 12h16M4 17h16" />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div id="mobile-menu" class="hidden border-t border-line bg-ink md:hidden">
+      <div class="flex flex-col px-4 py-6 font-display text-lg font-semibold uppercase tracking-[0.12em]">
+        <a class="border-b border-line py-4 text-accent/90 hover:text-wire" href="#services">Услуги</a>
+        <a class="border-b border-line py-4 text-accent/90 hover:text-wire" href="#gallery">Галерея</a>
+        <a class="border-b border-line py-4 text-accent/90 hover:text-wire" href="#about">О нас</a>
+        <a class="border-b border-line py-4 text-accent/90 hover:text-wire" href="#booking">Запись</a>
+        <a class="border-b border-line py-4 text-accent/90 hover:text-wire" href="#reviews">Отзывы</a>
+        <a class="border-b border-line py-4 text-accent/90 hover:text-wire" href="#contact">Контакты</a>
+        <a
+          href="https://n1417559.alteg.io/"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-wire mt-6 border border-wire py-4 text-center text-sm tracking-[0.2em] text-wire hover:bg-wire/10"
+        >
+          Записаться
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="hero" class="hero-clip relative min-h-[100dvh] overflow-hidden pt-[3.75rem] sm:pt-16">
+      <div class="absolute inset-0 z-0">
+        <img
+          src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=1920&q=75"
+          alt=""
+          class="h-full w-full scale-105 object-cover motion-safe:animate-drift"
+          width="1920"
+          height="1080"
+          fetchpriority="high"
+          decoding="async"
+        />
+        <div class="hero-bleed absolute inset-0"></div>
+      </div>
+      <div class="relative z-10 mx-auto flex min-h-[calc(100dvh-3.75rem)] w-full max-w-3xl flex-col items-center justify-center px-4 pb-28 pt-6 text-center sm:px-6 sm:pb-32 sm:pt-10">
+        <h1 class="sr-only">SOHA — барбершоп</h1>
+        <div class="animate-fade-in w-full leading-none">
+          <img
+            src="assets/logo.png"
+            alt="SOHA BARBERSHOP"
+            width="939"
+            height="290"
+            class="mx-auto block h-auto max-h-[9.5rem] w-full max-w-[min(100%,34rem)] object-contain sm:max-h-[11rem] md:max-h-[12.5rem] lg:max-h-[14rem]"
+            fetchpriority="high"
+          />
+        </div>
+        <p class="mx-auto mt-3 max-w-md border-t border-wire/40 pt-3 text-base leading-snug text-accent/90 sm:text-lg animate-fade-up" style="animation-delay: 0.12s; opacity: 0; animation-fill-mode: forwards">
+          Один раз SOHA&nbsp;— Всегда SOHA
+        </p>
+        <div class="mt-10 flex w-full max-w-lg flex-col items-stretch justify-center gap-3 sm:flex-row sm:gap-4 animate-fade-up" style="animation-delay: 0.28s; opacity: 0; animation-fill-mode: forwards">
+          <a
+            href="https://n1417559.alteg.io/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-wire inline-flex min-h-[52px] flex-1 items-center justify-center border border-wire bg-wire/15 px-6 py-3.5 text-xs font-bold uppercase tracking-[0.24em] text-accent backdrop-blur-sm transition hover:bg-wire/25 sm:min-w-[200px] sm:flex-none"
+          >
+            Записаться
+          </a>
+          <a
+            href="#services"
+            class="btn-wire inline-flex min-h-[52px] flex-1 items-center justify-center border border-white/22 bg-transparent px-6 py-3.5 text-xs font-bold uppercase tracking-[0.18em] text-accent transition hover:border-wire/70 hover:bg-white/[0.04] sm:min-w-[200px] sm:flex-none"
+          >
+            Смотреть услуги
+          </a>
+        </div>
+        <div class="mt-14 flex w-full max-w-md flex-col items-center gap-5 border-t border-line/50 pt-8 sm:mt-16">
+          <p class="text-center text-xs leading-relaxed text-muted">
+            Премиальный ритм без лишнего шума — только кресло, свет и руки мастера.
+          </p>
+          <a
+            href="#services"
+            class="flex h-11 w-11 items-center justify-center border border-line text-muted transition hover:border-wire/50 hover:text-wire"
+            aria-label="К услугам"
+          >
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="square" stroke-width="1.5" d="M6 9l6 6 6-6" /></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="services" class="relative border-t border-line bg-surface py-20 sm:py-28">
+      <div class="pointer-events-none absolute right-0 top-0 h-64 w-64 bg-[radial-gradient(circle_at_top_right,rgba(181,162,122,0.07),transparent_65%)]" aria-hidden="true"></div>
+      <div class="relative mx-auto max-w-[88rem] px-4 sm:px-6 lg:px-10">
+        <div class="reveal mb-16 flex flex-col gap-8 lg:mb-20 lg:flex-row lg:items-end lg:justify-between">
+          <div class="max-w-2xl">
+            <p class="section-label text-[11px] font-semibold uppercase text-wire">Меню</p>
+            <h2 class="mt-4 font-display text-[clamp(2.5rem,5vw,3.75rem)] font-bold tracking-[-0.03em] text-white">Услуги</h2>
+            <p class="mt-6 text-base leading-relaxed text-muted">
+              Сначала слушаем, как вы живёте с причёской, потом предлагаем форму. Ни «универсальных» шаблонов, ни спешки — только аккуратная геометрия и понятный уход дома.
+            </p>
+          </div>
+          <div class="hidden h-px flex-1 bg-gradient-to-r from-line to-transparent lg:block lg:translate-y-[-3.5rem]" aria-hidden="true"></div>
+        </div>
+        <div class="border-t border-line">
+          <div class="reveal grid gap-8 border-b border-line py-10 md:grid-cols-12 md:items-end md:gap-6 md:py-14">
+            <div class="md:col-span-7 lg:col-span-8">
+              <p class="text-sm leading-relaxed text-muted">
+                Прозрачный прайс без мелкого шрифта. Если сомневаетесь, что выбрать — запишитесь на «Комплекс»: мастер подстроит форму и ритм под ваш тип волос и рост бороды.
+              </p>
+            </div>
+            <div class="md:col-span-5 lg:col-span-4 md:text-right">
+              <p class="text-[10px] font-semibold uppercase tracking-[0.35em] text-muted">Валюта</p>
+              <p class="mt-2 font-display text-2xl font-semibold text-wire">MDL (L)</p>
+            </div>
+          </div>
+
+          <div class="divide-y divide-line">
+            <div class="reveal flex items-start justify-between gap-6 py-7 sm:py-8">
+              <div>
+                <p class="font-display text-xl font-semibold text-white">Стрижка</p>
+                <p class="mt-2 text-sm text-muted">Чистая форма, переходы, укладка.</p>
+              </div>
+              <p class="shrink-0 font-display text-xl font-semibold tabular-nums text-wire">400&nbsp;L</p>
+            </div>
+
+            <div class="reveal flex items-start justify-between gap-6 py-7 sm:py-8" style="transition-delay: 0.02s">
+              <div>
+                <p class="font-display text-xl font-semibold text-white">Комплекс</p>
+                <p class="mt-2 text-sm text-muted">Стрижка + моделирование бороды.</p>
+              </div>
+              <p class="shrink-0 font-display text-xl font-semibold tabular-nums text-wire">600&nbsp;L</p>
+            </div>
+
+            <div class="reveal flex items-start justify-between gap-6 py-7 sm:py-8" style="transition-delay: 0.04s">
+              <div>
+                <p class="font-display text-xl font-semibold text-white">Моделирование бороды</p>
+                <p class="mt-2 text-sm text-muted">Контур, симметрия, аккуратная линия роста.</p>
+              </div>
+              <p class="shrink-0 font-display text-xl font-semibold tabular-nums text-wire">300&nbsp;L</p>
+            </div>
+
+            <div class="reveal flex items-start justify-between gap-6 py-7 sm:py-8" style="transition-delay: 0.06s">
+              <div>
+                <p class="font-display text-xl font-semibold text-white">Комплекс + тонировка</p>
+                <p class="mt-2 max-w-2xl text-sm leading-relaxed text-muted">
+                  Комплексная услуга с тонированием: стрижка, моделирование бороды, уход за волосами и укладка.
+                  Тонировка придаёт глубину цвету, скрывает седину и усиливает общий образ.
+                </p>
+              </div>
+              <p class="shrink-0 font-display text-xl font-semibold tabular-nums text-wire">1000&nbsp;L</p>
+            </div>
+
+            <div class="reveal flex items-start justify-between gap-6 py-7 sm:py-8" style="transition-delay: 0.08s">
+              <div>
+                <p class="font-display text-xl font-semibold text-white">Камуфляж бороды</p>
+                <p class="mt-2 text-sm text-muted">Мягкое выравнивание тона, без эффекта «краски».</p>
+              </div>
+              <p class="shrink-0 font-display text-xl font-semibold tabular-nums text-wire">350&nbsp;L</p>
+            </div>
+
+            <div class="reveal flex items-start justify-between gap-6 py-7 sm:py-8" style="transition-delay: 0.10s">
+              <div>
+                <p class="font-display text-xl font-semibold text-white">Камуфляж головы</p>
+                <p class="mt-2 text-sm text-muted">Скрываем седину, усиливаем глубину цвета.</p>
+              </div>
+              <p class="shrink-0 font-display text-xl font-semibold tabular-nums text-wire">400&nbsp;L</p>
+            </div>
+
+            <div class="reveal flex items-start justify-between gap-6 py-7 sm:py-8" style="transition-delay: 0.12s">
+              <div>
+                <p class="font-display text-xl font-semibold text-white">Детская стрижка</p>
+                <p class="mt-2 text-sm text-muted">Быстро, аккуратно и спокойно.</p>
+              </div>
+              <p class="shrink-0 font-display text-xl font-semibold tabular-nums text-wire">400&nbsp;L</p>
+            </div>
+
+            <div class="reveal flex items-start justify-between gap-6 py-7 sm:py-8" style="transition-delay: 0.14s">
+              <div>
+                <p class="font-display text-xl font-semibold text-white">Восковой уход</p>
+                <p class="mt-2 text-sm text-muted">Чистые линии по мелким зонам.</p>
+              </div>
+              <p class="shrink-0 font-display text-xl font-semibold tabular-nums text-wire">100&nbsp;L</p>
+            </div>
+
+            <div class="reveal flex items-start justify-between gap-6 py-7 sm:py-8" style="transition-delay: 0.16s">
+              <div>
+                <p class="font-display text-xl font-semibold text-white">SPA</p>
+                <p class="mt-2 text-sm text-muted">Релакс‑уход для кожи и тонуса.</p>
+              </div>
+              <p class="shrink-0 font-display text-xl font-semibold tabular-nums text-wire">200&nbsp;L</p>
+            </div>
+
+            <div class="reveal flex items-start justify-between gap-6 py-7 sm:py-8" style="transition-delay: 0.18s">
+              <div>
+                <p class="font-display text-xl font-semibold text-white">Бритьё налысо</p>
+                <p class="mt-2 text-sm text-muted">Чисто, ровно, без раздражения.</p>
+              </div>
+              <p class="shrink-0 font-display text-xl font-semibold tabular-nums text-wire">150&nbsp;L</p>
+            </div>
+
+            <div class="reveal flex items-start justify-between gap-6 py-7 sm:py-8" style="transition-delay: 0.20s">
+              <div>
+                <p class="font-display text-xl font-semibold text-white">Укладка</p>
+                <p class="mt-2 text-sm text-muted">Форма и фиксация под ваш стиль.</p>
+              </div>
+              <p class="shrink-0 font-display text-xl font-semibold tabular-nums text-wire">100&nbsp;L</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="gallery" class="border-t border-line bg-ink py-20 sm:py-28">
+      <div class="mx-auto max-w-[88rem] px-4 sm:px-6 lg:px-10">
+        <div class="reveal mb-12 flex flex-col gap-10 lg:mb-16 lg:flex-row lg:items-start lg:justify-between">
+          <div class="max-w-lg">
+            <p class="section-label text-[11px] font-semibold uppercase text-wire">Интерьер</p>
+            <h2 class="mt-4 font-display text-[clamp(2.5rem,5vw,3.75rem)] font-bold tracking-[-0.03em] text-white">Галерея</h2>
+          </div>
+          <p class="max-w-md border-l border-line pl-6 text-sm leading-relaxed text-muted lg:mt-12 lg:max-w-sm">
+            Здесь тихо: без лишних разговоров за спиной и без «цирка» в зале. Свет мягкий, воздух чистый, инструменты лежат как надо — остаётся только сесть в кресло и выдохнуть.
+          </p>
+        </div>
+        <div class="grid auto-rows-[180px] grid-cols-6 gap-2 sm:auto-rows-[220px] sm:gap-3 lg:auto-rows-[260px] lg:gap-4">
+          <div class="gallery-item gallery-offset reveal group relative col-span-6 overflow-hidden border border-line sm:col-span-4 sm:row-span-2 lg:col-span-4 lg:row-span-2">
+            <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=1000&q=75" alt="Барбершоп — интерьер" class="h-full w-full object-cover opacity-[0.92]" width="1000" height="1250" loading="lazy" />
+            <span class="pointer-events-none absolute left-4 top-4 font-display text-[10px] font-bold uppercase tracking-[0.35em] text-white/90 drop-shadow-md">SOHA</span>
+          </div>
+          <div class="gallery-item gallery-offset reveal relative col-span-3 border border-line sm:col-span-2 lg:col-span-2">
+            <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=600&q=75" alt="Рабочее место мастера" class="h-full w-full object-cover opacity-[0.92]" width="600" height="600" loading="lazy" />
+          </div>
+          <div class="gallery-item gallery-offset reveal relative col-span-3 border border-line sm:col-span-2 lg:col-span-2">
+            <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=600&q=75" alt="Инструменты" class="h-full w-full object-cover opacity-[0.92]" width="600" height="600" loading="lazy" />
+          </div>
+          <div class="gallery-item gallery-offset reveal relative col-span-6 border border-line sm:col-span-3 lg:col-span-3">
+            <img src="https://images.unsplash.com/photo-1605497788044-5a32c7078486?auto=format&fit=crop&w=900&q=75" alt="Зона ожидания" class="h-full w-full object-cover opacity-[0.92]" width="900" height="675" loading="lazy" />
+          </div>
+          <div class="gallery-item gallery-offset reveal relative col-span-6 border border-line sm:col-span-3 lg:col-span-3">
+            <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=900&q=75" alt="В работе" class="h-full w-full object-cover opacity-[0.92]" width="900" height="675" loading="lazy" />
+          </div>
+          <div class="gallery-item gallery-offset reveal relative col-span-6 border border-line sm:col-span-4 lg:col-span-4">
+            <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=900&q=75" alt="Детали пространства" class="h-full w-full object-cover opacity-[0.92]" width="900" height="675" loading="lazy" />
+          </div>
+          <div class="gallery-item gallery-offset reveal relative col-span-6 border border-wire/25 bg-elevated sm:col-span-2 lg:col-span-2">
+            <div class="flex h-full flex-col justify-between p-5 sm:p-6">
+              <p class="font-display text-2xl font-bold leading-none text-white/90">01</p>
+              <p class="text-xs leading-relaxed text-muted">Свет, фактура, тишина — три опоры пространства.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="border-t border-line bg-surface py-20 sm:py-28">
+      <div class="mx-auto max-w-[88rem] px-4 sm:px-6 lg:px-10">
+        <div class="grid gap-12 lg:grid-cols-12 lg:gap-8 lg:items-center">
+          <div class="reveal relative lg:col-span-5">
+            <div class="absolute -bottom-6 -right-6 z-10 hidden h-32 w-32 border border-wire/30 bg-ink/80 backdrop-blur-md lg:block" aria-hidden="true"></div>
+            <div class="relative overflow-hidden border border-line lg:-translate-x-4">
+              <img
+                src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=900&q=75"
+                alt="Команда SOHA за работой"
+                class="aspect-[4/5] w-full object-cover lg:aspect-auto lg:min-h-[480px]"
+                width="900"
+                height="1125"
+                loading="lazy"
+              />
+              <div class="absolute inset-0 bg-gradient-to-tr from-ink/50 via-transparent to-transparent"></div>
+            </div>
+          </div>
+          <div class="reveal lg:col-span-6 lg:col-start-7">
+            <p class="section-label text-[11px] font-semibold uppercase text-wire">Философия</p>
+            <h2 class="mt-4 font-display text-[clamp(2.5rem,4.5vw,3.5rem)] font-bold tracking-[-0.03em] text-white">О нас</h2>
+            <div class="mt-10 space-y-6 border-l border-line pl-6 text-base leading-relaxed text-muted">
+              <p>
+                SOHA задуман как место, куда хочется возвращаться: без крика в интерьере и без навязчивого «салонного» сервиса. Мы держим планку ровно — от первого визита до десятого, потому что репутация собирается из мелочей.
+              </p>
+              <p>
+                Нам важно, как вы выглядите на десятый день после стрижки, а не только в момент, когда зеркало ещё в руках мастера. Поэтому обсуждаем привычки, рост волос, график — и только потом берёмся за ножницы и машинку.
+              </p>
+              <p class="text-accent/85">
+                Если коротко: спокойная атмосфера, внятные сроки и руки, которым можно доверить лицо. Остальное — в кресле, без лишних слов, если вы сами не завели разговор.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="booking" class="relative overflow-hidden border-t border-line bg-ink py-24 sm:py-32">
+      <div class="pointer-events-none absolute -left-20 top-1/2 h-[28rem] w-[28rem] -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(181,162,122,0.12),transparent_68%)]" aria-hidden="true"></div>
+      <div class="relative mx-auto max-w-[88rem] px-4 sm:px-6 lg:px-10">
+        <div class="reveal grid gap-12 lg:grid-cols-12 lg:items-center">
+          <div class="lg:col-span-5">
+            <p class="section-label text-[11px] font-semibold uppercase text-wire">Онлайн</p>
+            <h2 class="mt-5 font-display text-[clamp(2.25rem,4vw,3.25rem)] font-bold leading-[1.05] tracking-[-0.03em] text-white">
+              Забронируйте<br class="hidden sm:block" />
+              слот
+            </h2>
+          </div>
+          <div class="lg:col-span-6 lg:col-start-7">
+            <p class="text-base leading-relaxed text-muted">
+              Выберите услугу, время и мастера — система покажет свободные окна без переписок. Если нужен перенос или особый запрос, оставьте комментарий: администратор увидит его до вашего прихода.
+            </p>
+            <a
+              href="https://n1417559.alteg.io/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-wire mt-10 inline-flex min-h-[56px] items-center border border-wire bg-wire/10 px-10 py-4 text-xs font-bold uppercase tracking-[0.28em] text-accent transition hover:bg-wire/20"
+            >
+              Записаться онлайн
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="reviews" class="border-t border-line bg-surface py-20 sm:py-28">
+      <div class="mx-auto max-w-[88rem] px-4 sm:px-6 lg:px-10">
+        <div class="reveal mb-14 lg:mb-20 lg:flex lg:items-end lg:justify-between">
+          <div>
+            <p class="section-label text-[11px] font-semibold uppercase text-wire">Клиенты</p>
+            <h2 class="mt-4 font-display text-[clamp(2.5rem,5vw,3.75rem)] font-bold tracking-[-0.03em] text-white">Отзывы</h2>
+          </div>
+          <p class="mt-6 max-w-sm text-sm leading-relaxed text-muted lg:mt-0 lg:text-right">
+            То, что чаще всего отмечают после визита — спокойствие, ровные линии и предсказуемый результат.
+          </p>
+        </div>
+        <div class="reveal mb-10 flex flex-col gap-4 border border-line bg-ink/30 p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8">
+          <p class="text-sm leading-relaxed text-muted">
+            Отзывы подтягиваются автоматически из Google Maps (обновление по расписанию). Если отзывы временно не отображаются — откройте карточку в Google.
+          </p>
+          <a
+            href="https://www.google.com/maps/place/SOHA+BARBERSHOP/data=!4m2!3m1!1s0x0:0x5447992f5a55008d?sa=X&amp;ved=1t:2428&amp;ictx=111"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-wire inline-flex min-h-[44px] items-center justify-center border border-wire/60 px-6 py-2.5 text-[11px] font-bold uppercase tracking-[0.24em] text-accent transition hover:border-wire hover:bg-wire/10"
+          >
+            Смотреть в Google
+          </a>
+        </div>
+
+        <div id="reviews-grid" class="grid gap-4 sm:gap-5 lg:grid-cols-2" aria-live="polite">
+          <div class="reveal border border-line bg-elevated p-8 sm:p-10">
+            <p class="text-sm text-muted">Загружаем отзывы…</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="border-t border-line bg-ink py-20 sm:pb-28">
+      <div class="mx-auto max-w-[88rem] px-4 sm:px-6 lg:px-10">
+        <div class="reveal mb-12 lg:mb-16">
+          <p class="section-label text-[11px] font-semibold uppercase text-wire">Локация</p>
+          <h2 class="mt-4 font-display text-[clamp(2.5rem,5vw,3.75rem)] font-bold tracking-[-0.03em] text-white">Контакты</h2>
+        </div>
+        <div class="grid gap-10 lg:grid-cols-12 lg:gap-6">
+          <div class="reveal space-y-10 lg:col-span-4">
+            <div>
+              <h3 class="text-[10px] font-bold uppercase tracking-[0.35em] text-muted">Запись и связь</h3>
+              <p class="mt-4 text-sm leading-relaxed text-accent/88">
+                Основной канал — онлайн-бронирование: так быстрее видно свободные слоты и состав услуг. По телефону или в Instagram можно уточнить детали до визита.
+              </p>
+            </div>
+            <div>
+              <h3 class="text-[10px] font-bold uppercase tracking-[0.35em] text-muted">Телефон</h3>
+              <a
+                href="tel:+37379662111"
+                class="mt-3 inline-block font-display text-2xl font-semibold tracking-tight text-white transition hover:text-wire"
+              >
+                0796 62 111
+              </a>
+              <p class="mt-1 text-xs text-muted">для звонков из-за рубежа: +373&nbsp;79&nbsp;662&nbsp;111</p>
+            </div>
+            <div>
+              <h3 class="text-[10px] font-bold uppercase tracking-[0.35em] text-muted">Instagram</h3>
+              <a
+                href="https://www.instagram.com/soha_barbershop/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="mt-3 block text-sm font-medium text-accent transition hover:text-wire"
+              >
+                <span class="text-wire">@</span>soha_barbershop
+                <span class="mt-1 block text-xs font-normal text-muted">instagram.com/soha_barbershop</span>
+              </a>
+            </div>
+            <div>
+              <h3 class="text-[10px] font-bold uppercase tracking-[0.35em] text-muted">Как добраться</h3>
+              <p class="mt-4 text-sm leading-relaxed text-accent/88">
+                <strong class="font-medium text-accent">Адрес:</strong> strada Cojocarilor 20 b, Chișinău, Moldova. Подъезд и парковка — уточняйте при записи. Точка на карте — как в&nbsp;<a href="https://www.google.com/maps/place/SOHA+BARBERSHOP/data=!4m2!3m1!1s0x0:0x5447992f5a55008d?sa=X&amp;ved=1t:2428&amp;ictx=111" target="_blank" rel="noopener noreferrer" class="text-wire underline decoration-wire/50 underline-offset-2 transition hover:text-accent">Google Картах</a>.
+              </p>
+            </div>
+            <div>
+              <h3 class="text-[10px] font-bold uppercase tracking-[0.35em] text-muted">Часы</h3>
+              <p class="mt-4 font-display text-xl font-semibold text-white">10:00 — 22:00</p>
+              <p class="mt-1 text-xs text-muted">ежедневно · слоты в записи актуальны</p>
+            </div>
+            <a
+              href="https://n1417559.alteg.io/"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="btn-wire inline-flex min-h-[48px] items-center border border-wire/60 px-8 py-3 text-[11px] font-bold uppercase tracking-[0.24em] text-accent transition hover:border-wire hover:bg-wire/10"
+            >
+              Записаться
+            </a>
+          </div>
+          <div class="reveal flex flex-col overflow-hidden border border-line lg:col-span-8">
+            <iframe
+              title="SOHA BARBERSHOP — strada Cojocarilor 20 b, Chișinău"
+              class="min-h-[300px] w-full flex-1 grayscale contrast-125 sm:min-h-[380px]"
+              src="https://maps.google.com/maps?q=47.0252716%2C28.8466248&amp;hl=ro&amp;z=18&amp;output=embed"
+              style="border: 0"
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              allowfullscreen
+            ></iframe>
+            <a
+              href="https://www.google.com/maps/place/SOHA+BARBERSHOP/data=!4m2!3m1!1s0x0:0x5447992f5a55008d?sa=X&amp;ved=1t:2428&amp;ictx=111"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="border-t border-line bg-elevated px-4 py-3 text-center text-xs font-medium tracking-wide text-wire transition hover:bg-white/[0.03] hover:text-accent"
+            >
+              Открыть SOHA в Google Картах
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+
+  <div
+    class="fixed inset-x-0 bottom-0 z-40 border-t border-line/90 bg-ink/90 p-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] backdrop-blur-xl md:hidden"
+    role="region"
+    aria-label="Быстрая запись"
+  >
+    <a
+      href="https://n1417559.alteg.io/"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="btn-wire flex min-h-[52px] w-full items-center justify-center border border-wire/80 bg-wire/15 text-xs font-bold uppercase tracking-[0.28em] text-accent"
+    >
+      Записаться
+    </a>
+  </div>
+
+  <script>
+    (function () {
+      var header = document.getElementById("site-header");
+      var toggle = document.getElementById("menu-toggle");
+      var menu = document.getElementById("mobile-menu");
+      var year = document.getElementById("year");
+      if (year) year.textContent = new Date().getFullYear();
+
+      function onScroll() {
+        if (!header) return;
+        if (window.scrollY > 32) {
+          header.classList.add("shadow-[0_1px_0_rgba(181,162,122,0.12)]", "bg-ink/92");
+          header.classList.remove("bg-ink/70");
+        } else {
+          header.classList.remove("shadow-[0_1px_0_rgba(181,162,122,0.12)]", "bg-ink/92");
+          header.classList.add("bg-ink/70");
+        }
+      }
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+
+      if (toggle && menu) {
+        toggle.addEventListener("click", function () {
+          menu.classList.toggle("hidden");
+          var menuClosed = menu.classList.contains("hidden");
+          toggle.setAttribute("aria-expanded", String(!menuClosed));
+          toggle.setAttribute("aria-label", menuClosed ? "Открыть меню" : "Закрыть меню");
+        });
+        menu.querySelectorAll("a").forEach(function (link) {
+          link.addEventListener("click", function () {
+            menu.classList.add("hidden");
+            toggle.setAttribute("aria-expanded", "false");
+            toggle.setAttribute("aria-label", "Открыть меню");
+          });
+        });
+      }
+
+      var reveals = document.querySelectorAll(".reveal");
+      if ("IntersectionObserver" in window && reveals.length) {
+        var io = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (e) {
+              if (e.isIntersecting) {
+                e.target.classList.add("visible");
+                io.unobserve(e.target);
+              }
+            });
+          },
+          { rootMargin: "0px 0px -10% 0px", threshold: 0.06 }
+        );
+        reveals.forEach(function (el) {
+          io.observe(el);
+        });
+      } else {
+        reveals.forEach(function (el) {
+          el.classList.add("visible");
+        });
+      }
+
+      function escapeHtml(s) {
+        return String(s)
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/\"/g, "&quot;")
+          .replace(/'/g, "&#39;");
+      }
+
+      function initials(name) {
+        if (!name) return "SO";
+        var parts = String(name).trim().split(/\s+/).filter(Boolean);
+        var a = parts[0] ? parts[0][0] : "S";
+        var b = parts[1] ? parts[1][0] : "O";
+        return (a + b).toUpperCase();
+      }
+
+      function stars(rating) {
+        var r = Math.max(0, Math.min(5, Number(rating) || 0));
+        var full = Math.round(r);
+        return "★★★★★".slice(0, full) + "☆☆☆☆☆".slice(0, 5 - full);
+      }
+
+      function renderReviews(data) {
+        var grid = document.getElementById("reviews-grid");
+        if (!grid) return;
+
+        var items = data && Array.isArray(data.reviews) ? data.reviews : [];
+        if (items.length === 0) {
+          grid.innerHTML = "<div class=\"border border-line bg-elevated p-8 sm:p-10\"><p class=\"text-sm text-muted\">Пока нет отзывов для отображения.</p></div>";
+          return;
+        }
+
+        grid.innerHTML = items.slice(0, 6).map(function (rv, idx) {
+          var author = escapeHtml(rv.author_name || rv.author || "Гость");
+          var text = escapeHtml(rv.text || rv.review || "");
+          var rating = Number(rv.rating || 0);
+          var when = escapeHtml(rv.relative_time_description || rv.when || "");
+          var badge = initials(rv.author_name || rv.author || "");
+          var delay = Math.min(idx * 0.04, 0.16);
+
+          return (
+            "<figure class=\"reveal border border-line bg-elevated p-8 sm:p-10\" style=\"transition-delay: " + delay + "s\">" +
+              "<div class=\"mb-5 flex items-start justify-between gap-4\">" +
+                "<div class=\"flex items-center gap-3\">" +
+                  "<span class=\"font-display text-xs font-bold uppercase tracking-[0.2em] text-wire\">" + badge + "</span>" +
+                  "<div>" +
+                    "<p class=\"text-sm font-semibold text-white\">" + author + "</p>" +
+                    (when ? "<p class=\"text-xs text-muted\">" + when + "</p>" : "<p class=\"text-xs text-muted\">Google</p>") +
+                  "</div>" +
+                "</div>" +
+                "<p class=\"text-xs font-semibold tracking-wider text-wire\" aria-label=\"Рейтинг\">" + stars(rating) + "</p>" +
+              "</div>" +
+              "<blockquote class=\"text-base leading-relaxed text-accent/90\">" + (text ? ("«" + text + "»") : "«Отзыв без текста.»") + "</blockquote>" +
+            "</figure>"
+          );
+        }).join("");
+
+        var newReveals = grid.querySelectorAll(".reveal");
+        if ("IntersectionObserver" in window && newReveals.length) {
+          var io2 = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (e) {
+                if (e.isIntersecting) {
+                  e.target.classList.add("visible");
+                  io2.unobserve(e.target);
+                }
+              });
+            },
+            { rootMargin: "0px 0px -10% 0px", threshold: 0.06 }
+          );
+          newReveals.forEach(function (el) {
+            io2.observe(el);
+          });
+        } else {
+          newReveals.forEach(function (el) {
+            el.classList.add("visible");
+          });
+        }
+      }
+
+      fetch("data/reviews.json", { cache: "no-store" })
+        .then(function (r) {
+          if (!r.ok) throw new Error("bad status");
+          return r.json();
+        })
+        .then(renderReviews)
+        .catch(function () {
+          var grid = document.getElementById("reviews-grid");
+          if (grid) {
+            grid.innerHTML = "<div class=\"border border-line bg-elevated p-8 sm:p-10\"><p class=\"text-sm text-muted\">Отзывы временно недоступны. Откройте карточку в Google.</p></div>";
+          }
+        });
+    })();
+  </script>
+</body>
+</html>
