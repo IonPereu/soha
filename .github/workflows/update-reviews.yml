@@ -25,6 +25,7 @@ jobs:
         env:
           GOOGLE_PLACES_API_KEY: ${{ secrets.GOOGLE_PLACES_API_KEY }}
           GOOGLE_PLACE_ID: ${{ secrets.GOOGLE_PLACE_ID }}
+          GOOGLE_PLACE_QUERY: ${{ secrets.GOOGLE_PLACE_QUERY }}
         run: node scripts/fetch-google-reviews.mjs
 
       - name: Commit changes (if any)
