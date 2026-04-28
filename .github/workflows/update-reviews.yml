@@ -35,6 +35,6 @@ jobs:
             exit 0
           fi
           git add data/reviews.json
-          git commit -m "chore: update google reviews"
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "chore: update google reviews"
           git push
 

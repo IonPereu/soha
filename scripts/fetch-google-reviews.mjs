@@ -100,7 +100,7 @@ async function resolvePlaceId({ key, placeId, placeQuery }) {
 
 async function main() {
   const key = must(API_KEY, "GOOGLE_PLACES_API_KEY");
-  const resolvedId = await resolvePlaceId({
+  let usedPlaceId = await resolvePlaceId({
     key,
     placeId: PLACE_ID,
     placeQuery: PLACE_QUERY,
@@ -115,7 +115,7 @@ async function main() {
   ].join(",");
 
   const url = `https://places.googleapis.com/v1/places/${encodeURIComponent(
-    resolvedId
+    usedPlaceId
   )}?fields=${encodeURIComponent(fields)}&languageCode=ru`;
 
   let place;
@@ -125,8 +125,18 @@ async function main() {
     });
   } catch (e) {
     // If cached placeId became invalid, try to re-resolve via query (if provided).
-    if (e && e.status === 404 && PLACE_QUERY) {
-      const id2 = await resolvePlaceId({ key, placeQuery: PLACE_QUERY });
+    if (e && e.status === 404) {
+      if (!PLACE_QUERY) {
+        throw new Error(
+          [
+            "Place ID is invalid (404).",
+            "Set GOOGLE_PLACE_QUERY (recommended) to auto-resolve a fresh Place ID.",
+            'Example: GOOGLE_PLACE_QUERY="SOHA BARBERSHOP, strada Cojocarilor 20B, Chișinău"',
+          ].join(" ")
+        );
+      }
+      const id2 = await resolvePlaceId({ key, placeQuery: PLACE_QUERY, placeId: "" });
+      usedPlaceId = id2;
       const url2 = `https://places.googleapis.com/v1/places/${encodeURIComponent(
         id2
       )}?fields=${encodeURIComponent(fields)}&languageCode=ru`;
@@ -152,7 +162,7 @@ async function main() {
   const out = {
     updated_at: new Date().toISOString(),
     source: "google_places_api",
-    place_id: resolvedId,
+    place_id: usedPlaceId,
     place_name: safeText(place.displayName?.text || place.name || "SOHA BARBERSHOP"),
     rating: Number(place.rating || 0),
     user_ratings_total: Number(place.userRatingCount || 0),
