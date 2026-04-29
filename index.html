@@ -404,33 +404,28 @@
             Здесь тихо: без лишних разговоров за спиной и без «цирка» в зале. Свет мягкий, воздух чистый, инструменты лежат как надо — остаётся только сесть в кресло и выдохнуть.
           </p>
         </div>
-        <div class="grid auto-rows-[180px] grid-cols-6 gap-2 sm:auto-rows-[220px] sm:gap-3 lg:auto-rows-[260px] lg:gap-4">
-          <div class="gallery-item gallery-offset reveal group relative col-span-6 overflow-hidden border border-line sm:col-span-4 sm:row-span-2 lg:col-span-4 lg:row-span-2">
-            <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=1000&q=75" alt="Барбершоп — интерьер" class="h-full w-full object-cover opacity-[0.92]" width="1000" height="1250" loading="lazy" />
+        <div class="gallery-item gallery-offset reveal group relative mb-3 overflow-hidden border border-line sm:mb-4 lg:mb-5">
+          <div class="relative aspect-video w-full bg-elevated">
+            <video
+              id="gallery-general-video"
+              class="h-full w-full object-cover opacity-[0.92]"
+              autoplay
+              playsinline
+              muted
+              loop
+              preload="metadata"
+            >
+              <source src="media/GAlery/general.mp4" type="video/mp4" />
+            </video>
             <span class="pointer-events-none absolute left-4 top-4 font-display text-[10px] font-bold uppercase tracking-[0.35em] text-white/90 drop-shadow-md">SOHA</span>
           </div>
-          <div class="gallery-item gallery-offset reveal relative col-span-3 border border-line sm:col-span-2 lg:col-span-2">
-            <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?auto=format&fit=crop&w=600&q=75" alt="Рабочее место мастера" class="h-full w-full object-cover opacity-[0.92]" width="600" height="600" loading="lazy" />
-          </div>
-          <div class="gallery-item gallery-offset reveal relative col-span-3 border border-line sm:col-span-2 lg:col-span-2">
-            <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=600&q=75" alt="Инструменты" class="h-full w-full object-cover opacity-[0.92]" width="600" height="600" loading="lazy" />
-          </div>
-          <div class="gallery-item gallery-offset reveal relative col-span-6 border border-line sm:col-span-3 lg:col-span-3">
-            <img src="https://images.unsplash.com/photo-1605497788044-5a32c7078486?auto=format&fit=crop&w=900&q=75" alt="Зона ожидания" class="h-full w-full object-cover opacity-[0.92]" width="900" height="675" loading="lazy" />
-          </div>
-          <div class="gallery-item gallery-offset reveal relative col-span-6 border border-line sm:col-span-3 lg:col-span-3">
-            <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=900&q=75" alt="В работе" class="h-full w-full object-cover opacity-[0.92]" width="900" height="675" loading="lazy" />
-          </div>
-          <div class="gallery-item gallery-offset reveal relative col-span-6 border border-line sm:col-span-4 lg:col-span-4">
-            <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?auto=format&fit=crop&w=900&q=75" alt="Детали пространства" class="h-full w-full object-cover opacity-[0.92]" width="900" height="675" loading="lazy" />
-          </div>
-          <div class="gallery-item gallery-offset reveal relative col-span-6 border border-wire/25 bg-elevated sm:col-span-2 lg:col-span-2">
-            <div class="flex h-full flex-col justify-between p-5 sm:p-6">
-              <p class="font-display text-2xl font-bold leading-none text-white/90">01</p>
-              <p class="text-xs leading-relaxed text-muted">Свет, фактура, тишина — три опоры пространства.</p>
-            </div>
-          </div>
         </div>
+
+        <div
+          id="gallery-photos-grid"
+          class="grid grid-flow-dense auto-rows-[180px] grid-cols-6 gap-[2px] sm:auto-rows-[220px] sm:gap-1 lg:auto-rows-[260px] lg:gap-2"
+          data-photos="media/GAlery/1.jpg|media/GAlery/2.jpg|media/GAlery/3.jpg|media/GAlery/4.jpg|media/GAlery/5.jpg|media/GAlery/6.png|media/GAlery/8.jpg|media/GAlery/9.jpg|media/GAlery/10.jpg|media/GAlery/11.jpg|media/GAlery/12.jpg|media/GAlery/13.jpg"
+        ></div>
       </div>
     </section>
 
@@ -693,6 +688,92 @@
           .replace(/>/g, "&gt;")
           .replace(/\"/g, "&quot;")
           .replace(/'/g, "&#39;");
+      }
+
+      function shuffleInPlace(arr) {
+        for (var i = arr.length - 1; i > 0; i--) {
+          var j = Math.floor(Math.random() * (i + 1));
+          var tmp = arr[i];
+          arr[i] = arr[j];
+          arr[j] = tmp;
+        }
+        return arr;
+      }
+
+      function tryPlayVideo(video) {
+        if (!video || typeof video.play !== "function") return;
+        var p = video.play();
+        if (p && typeof p.catch === "function") {
+          p.catch(function () {});
+        }
+      }
+
+      function observeReveals(root) {
+        var els = root ? root.querySelectorAll(".reveal") : [];
+        if (!els || !els.length) return;
+        if ("IntersectionObserver" in window) {
+          var ioLocal = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (e) {
+                if (e.isIntersecting) {
+                  e.target.classList.add("visible");
+                  ioLocal.unobserve(e.target);
+                }
+              });
+            },
+            { rootMargin: "0px 0px -10% 0px", threshold: 0.06 }
+          );
+          els.forEach(function (el) {
+            if (!el.classList.contains("visible")) ioLocal.observe(el);
+          });
+        } else {
+          els.forEach(function (el) {
+            el.classList.add("visible");
+          });
+        }
+      }
+
+      var generalVideo = document.getElementById("gallery-general-video");
+      if (generalVideo) {
+        // Autoplay on page load (muted + playsinline).
+        tryPlayVideo(generalVideo);
+        document.addEventListener("visibilitychange", function () {
+          if (!document.hidden) tryPlayVideo(generalVideo);
+        });
+      }
+
+      var galleryPhotosGrid = document.getElementById("gallery-photos-grid");
+      if (galleryPhotosGrid) {
+        var rawPhotos = galleryPhotosGrid.getAttribute("data-photos") || "";
+        var photos = rawPhotos.split("|").map(function (s) { return String(s || "").trim(); }).filter(Boolean);
+        shuffleInPlace(photos);
+
+        var patterns = [
+          "col-span-6 sm:col-span-4 sm:row-span-2 lg:col-span-4 lg:row-span-2",
+          "col-span-3 sm:col-span-2 lg:col-span-2",
+          "col-span-3 sm:col-span-2 lg:col-span-2",
+          "col-span-6 sm:col-span-3 lg:col-span-3",
+          "col-span-6 sm:col-span-3 lg:col-span-3",
+          "col-span-6 sm:col-span-6 lg:col-span-6",
+          "col-span-6 sm:col-span-3 lg:col-span-2",
+          "col-span-3 sm:col-span-3 lg:col-span-2",
+          "col-span-3 sm:col-span-3 lg:col-span-4 lg:row-span-2"
+        ];
+        shuffleInPlace(patterns);
+
+        galleryPhotosGrid.innerHTML = photos
+          .map(function (src, idx) {
+            var name = src.split("/").pop() || "Фото";
+            var klass = patterns[idx % patterns.length];
+            return (
+              "<div class=\"gallery-item gallery-offset reveal relative overflow-hidden " + klass + "\">" +
+                "<img src=\"" + escapeHtml(src) + "\" alt=\"" + escapeHtml(name) + "\" class=\"h-full w-full object-cover opacity-[0.95]\" loading=\"lazy\" />" +
+              "</div>"
+            );
+          })
+          .join("");
+
+        observeReveals(galleryPhotosGrid);
       }
 
       function initials(name) {
