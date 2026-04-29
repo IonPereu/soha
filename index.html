@@ -435,15 +435,17 @@
           <div class="reveal relative lg:col-span-5">
             <div class="absolute -bottom-6 -right-6 z-10 hidden h-32 w-32 border border-wire/30 bg-ink/80 backdrop-blur-md lg:block" aria-hidden="true"></div>
             <div class="relative overflow-hidden border border-line lg:-translate-x-4">
-              <img
-                src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?auto=format&fit=crop&w=900&q=75"
-                alt="Команда SOHA за работой"
-                class="aspect-[4/5] w-full object-cover lg:aspect-auto lg:min-h-[480px]"
-                width="900"
-                height="1125"
-                loading="lazy"
-              />
-              <div class="absolute inset-0 bg-gradient-to-tr from-ink/50 via-transparent to-transparent"></div>
+              <div class="p-4 sm:p-5">
+                <p class="text-[10px] font-bold uppercase tracking-[0.35em] text-muted">Видео</p>
+                <p class="mt-3 text-sm leading-relaxed text-muted">
+                  Нажмите на любое видео, чтобы открыть на весь экран и запустить воспроизведение.
+                </p>
+              </div>
+              <div
+                id="about-videos-grid"
+                class="grid grid-cols-2 gap-[2px] p-[2px] sm:grid-cols-3"
+                data-videos="media/About/0.mp4|media/About/1.mp4|media/About/2.mp4|media/About/3.mp4|media/About/4.mp4"
+              ></div>
             </div>
           </div>
           <div class="reveal lg:col-span-6 lg:col-start-7">
@@ -646,6 +648,30 @@
     />
   </div>
 
+  <div
+    id="videobox"
+    class="fixed inset-0 z-[999] hidden items-center justify-center bg-black/85 p-4"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Просмотр видео"
+  >
+    <button
+      id="videobox-close"
+      type="button"
+      class="btn-wire absolute right-4 top-4 inline-flex h-11 w-11 items-center justify-center border border-wire/70 bg-ink/70 text-sm font-bold text-accent backdrop-blur-sm"
+      aria-label="Закрыть"
+    >
+      ✕
+    </button>
+    <video
+      id="videobox-video"
+      class="max-h-[90vh] w-auto max-w-[min(96vw,1100px)] bg-black object-contain"
+      playsinline
+      controls
+      preload="metadata"
+    ></video>
+  </div>
+
   <script>
     (function () {
       var header = document.getElementById("site-header");
@@ -796,6 +822,47 @@
         if (e.key === "Escape") closeLightbox();
       });
 
+      var videobox = document.getElementById("videobox");
+      var videoboxVideo = document.getElementById("videobox-video");
+      var videoboxClose = document.getElementById("videobox-close");
+      var videoboxOpen = false;
+
+      function openVideobox(src) {
+        if (!videobox || !videoboxVideo) return;
+        videoboxVideo.src = src || "";
+        videobox.classList.remove("hidden");
+        videobox.classList.add("flex");
+        document.body.classList.add("overflow-hidden");
+        videoboxOpen = true;
+        tryPlayVideo(videoboxVideo);
+      }
+
+      function closeVideobox() {
+        if (!videobox || !videoboxVideo) return;
+        videobox.classList.add("hidden");
+        videobox.classList.remove("flex");
+        document.body.classList.remove("overflow-hidden");
+        try { videoboxVideo.pause(); } catch (e) {}
+        videoboxVideo.removeAttribute("src");
+        videoboxVideo.load();
+        videoboxOpen = false;
+      }
+
+      if (videobox) {
+        videobox.addEventListener("click", function (e) {
+          if (e.target === videobox) closeVideobox();
+        });
+      }
+      if (videoboxClose) {
+        videoboxClose.addEventListener("click", function () {
+          closeVideobox();
+        });
+      }
+      document.addEventListener("keydown", function (e) {
+        if (!videoboxOpen) return;
+        if (e.key === "Escape") closeVideobox();
+      });
+
       var generalVideo = document.getElementById("gallery-general-video");
       if (generalVideo) {
         // Autoplay on page load (muted + playsinline).
@@ -850,6 +917,38 @@
           var img = t.closest ? t.closest("img") : null;
           if (!img || !galleryPhotosGrid.contains(img)) return;
           openLightbox(img.currentSrc || img.src, img.alt || "");
+        });
+      }
+
+      var aboutVideosGrid = document.getElementById("about-videos-grid");
+      if (aboutVideosGrid) {
+        var rawVideos = aboutVideosGrid.getAttribute("data-videos") || "";
+        var videos = rawVideos.split("|").map(function (s) { return String(s || "").trim(); }).filter(Boolean);
+
+        aboutVideosGrid.innerHTML = videos
+          .map(function (src) {
+            var name = src.split("/").pop() || "video";
+            return (
+              "<button type=\"button\" class=\"gallery-item gallery-offset reveal relative overflow-hidden bg-ink/40\" data-video-src=\"" + escapeHtml(src) + "\" aria-label=\"" + escapeHtml(name) + "\">" +
+                "<video class=\"h-full w-full object-cover opacity-[0.92]\" muted playsinline preload=\"metadata\">" +
+                  "<source src=\"" + escapeHtml(src) + "\" type=\"video/mp4\" />" +
+                "</video>" +
+                "<span class=\"pointer-events-none absolute inset-0 flex items-center justify-center\">" +
+                  "<span class=\"inline-flex h-12 w-12 items-center justify-center rounded-full border border-wire/60 bg-ink/70 text-xs font-bold tracking-[0.2em] text-accent backdrop-blur-sm\">PLAY</span>" +
+                "</span>" +
+              "</button>"
+            );
+          })
+          .join("");
+
+        observeReveals(aboutVideosGrid);
+
+        aboutVideosGrid.addEventListener("click", function (e) {
+          var t = e.target;
+          if (!t) return;
+          var btn = t.closest ? t.closest("[data-video-src]") : null;
+          if (!btn || !aboutVideosGrid.contains(btn)) return;
+          openVideobox(btn.getAttribute("data-video-src") || "");
         });
       }
 
