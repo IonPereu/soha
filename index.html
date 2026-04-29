@@ -709,8 +709,18 @@
         return "★★★★★".slice(0, full) + "☆☆☆☆☆".slice(0, 5 - full);
       }
 
+      function parseGoogleTime(isoTime) {
+        if (!isoTime) return null;
+        var raw = String(isoTime).trim();
+        if (!raw) return null;
+        // Normalize RFC3339 with nanoseconds (up to 9 digits) to milliseconds for Date parsing.
+        var normalized = raw.replace(/\.(\d{3})\d+Z$/, ".$1Z");
+        var d = new Date(normalized);
+        return Number.isNaN(d.getTime()) ? null : d;
+      }
+
       function formatRelativeTime(isoTime, fallback) {
-        var date = isoTime ? new Date(isoTime) : null;
+        var date = parseGoogleTime(isoTime);
         if (!date || Number.isNaN(date.getTime())) {
           return fallback || "";
         }
