@@ -719,7 +719,7 @@
           return;
         }
 
-        grid.innerHTML = items.slice(0, 6).map(function (rv, idx) {
+        grid.innerHTML = items.slice(0, 10).map(function (rv, idx) {
           var author = escapeHtml(rv.author_name || rv.author || "Гость");
           var text = escapeHtml(rv.text || rv.review || "");
           var rating = Number(rv.rating || 0);

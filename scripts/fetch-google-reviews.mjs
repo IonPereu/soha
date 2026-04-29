@@ -16,6 +16,7 @@ import fs from "node:fs/promises";
 const API_KEY = process.env.GOOGLE_PLACES_API_KEY;
 const PLACE_ID = process.env.GOOGLE_PLACE_ID;
 const PLACE_QUERY = process.env.GOOGLE_PLACE_QUERY;
+const REVIEWS_LIMIT = 10;
 
 function must(value, name) {
   if (!value || String(value).trim() === "") {
@@ -157,7 +158,9 @@ async function main() {
       profile_photo_url: safeText(r.authorAttribution?.photoUri || r.profile_photo_url || ""),
       time: r.publishTime || "",
     }))
-    .sort((a, b) => String(b.time || "").localeCompare(String(a.time || "")));
+    .filter((r) => r.rating === 5)
+    .sort((a, b) => String(b.time || "").localeCompare(String(a.time || "")))
+    .slice(0, REVIEWS_LIMIT);
 
   const out = {
     updated_at: new Date().toISOString(),
