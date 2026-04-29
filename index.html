@@ -809,7 +809,14 @@
       if (galleryPhotosGrid) {
         var rawPhotos = galleryPhotosGrid.getAttribute("data-photos") || "";
         var photos = rawPhotos.split("|").map(function (s) { return String(s || "").trim(); }).filter(Boolean);
-        shuffleInPlace(photos);
+        photos.sort(function (a, b) {
+          function nOf(p) {
+            var base = (String(p || "").split("/").pop() || "").split(".")[0];
+            var m = base.match(/\d+/);
+            return m ? Number(m[0]) : Number.POSITIVE_INFINITY;
+          }
+          return nOf(a) - nOf(b);
+        });
 
         var patterns = [
           "col-span-6 sm:col-span-4 sm:row-span-2 lg:col-span-4 lg:row-span-2",
@@ -822,7 +829,6 @@
           "col-span-3 sm:col-span-3 lg:col-span-2",
           "col-span-3 sm:col-span-3 lg:col-span-4 lg:row-span-2"
         ];
-        shuffleInPlace(patterns);
 
         galleryPhotosGrid.innerHTML = photos
           .map(function (src, idx) {
