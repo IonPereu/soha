@@ -431,38 +431,32 @@
 
     <section id="about" class="border-t border-line bg-surface py-20 sm:py-28">
       <div class="mx-auto max-w-[88rem] px-4 sm:px-6 lg:px-10">
-        <div class="grid gap-12 lg:grid-cols-12 lg:gap-8 lg:items-center">
-          <div class="reveal relative lg:col-span-5">
-            <div class="absolute -bottom-6 -right-6 z-10 hidden h-32 w-32 border border-wire/30 bg-ink/80 backdrop-blur-md lg:block" aria-hidden="true"></div>
-            <div class="relative overflow-hidden border border-line lg:-translate-x-4">
-              <div class="p-4 sm:p-5">
-                <p class="text-[10px] font-bold uppercase tracking-[0.35em] text-muted">Видео</p>
-                <p class="mt-3 text-sm leading-relaxed text-muted">
-                  Нажмите на любое видео, чтобы открыть на весь экран и запустить воспроизведение.
-                </p>
-              </div>
-              <div
-                id="about-videos-grid"
-                class="grid grid-cols-2 gap-[2px] p-[2px] sm:grid-cols-3"
-                data-videos="media/About/0.mp4|media/About/1.mp4|media/About/2.mp4|media/About/3.mp4|media/About/4.mp4"
-              ></div>
-            </div>
-          </div>
-          <div class="reveal lg:col-span-6 lg:col-start-7">
+        <div class="reveal mb-12 flex flex-col gap-10 lg:mb-16 lg:flex-row lg:items-start lg:justify-between">
+          <div class="max-w-lg">
             <p class="section-label text-[11px] font-semibold uppercase text-wire">Философия</p>
             <h2 class="mt-4 font-display text-[clamp(2.5rem,4.5vw,3.5rem)] font-bold tracking-[-0.03em] text-white">О нас</h2>
-            <div class="mt-10 space-y-6 border-l border-line pl-6 text-base leading-relaxed text-muted">
-              <p>
-                SOHA задуман как место, куда хочется возвращаться: без крика в интерьере и без навязчивого «салонного» сервиса. Мы держим планку ровно — от первого визита до десятого, потому что репутация собирается из мелочей.
-              </p>
-              <p>
-                Нам важно, как вы выглядите на десятый день после стрижки, а не только в момент, когда зеркало ещё в руках мастера. Поэтому обсуждаем привычки, рост волос, график — и только потом берёмся за ножницы и машинку.
-              </p>
-              <p class="text-accent/85">
-                Если коротко: спокойная атмосфера, внятные сроки и руки, которым можно доверить лицо. Остальное — в кресле, без лишних слов, если вы сами не завели разговор.
-              </p>
-            </div>
           </div>
+          <p class="max-w-md border-l border-line pl-6 text-sm leading-relaxed text-muted lg:mt-12 lg:max-w-sm">
+            Нажмите на любое видео, чтобы открыть на весь экран и запустить воспроизведение.
+          </p>
+        </div>
+
+        <div
+          id="about-videos-grid"
+          class="grid gap-2 sm:gap-3 lg:gap-4 grid-cols-1 sm:grid-cols-2"
+          data-videos="media/About/0.mp4|media/About/1.mp4|media/About/2.mp4|media/About/3.mp4|media/About/4.mp4"
+        ></div>
+
+        <div class="reveal mt-12 space-y-6 border-l border-line pl-6 text-base leading-relaxed text-muted">
+          <p>
+            SOHA задуман как место, куда хочется возвращаться: без крика в интерьере и без навязчивого «салонного» сервиса. Мы держим планку ровно — от первого визита до десятого, потому что репутация собирается из мелочей.
+          </p>
+          <p>
+            Нам важно, как вы выглядите на десятый день после стрижки, а не только в момент, когда зеркало ещё в руках мастера. Поэтому обсуждаем привычки, рост волос, график — и только потом берёмся за ножницы и машинку.
+          </p>
+          <p class="text-accent/85">
+            Если коротко: спокойная атмосфера, внятные сроки и руки, которым можно доверить лицо. Остальное — в кресле, без лишних слов, если вы сами не завели разговор.
+          </p>
         </div>
       </div>
     </section>
@@ -930,12 +924,12 @@
             var name = src.split("/").pop() || "video";
             return (
               "<button type=\"button\" class=\"gallery-item gallery-offset reveal relative overflow-hidden bg-ink/40\" data-video-src=\"" + escapeHtml(src) + "\" aria-label=\"" + escapeHtml(name) + "\">" +
+                "<div class=\"relative aspect-video w-full\">" +
                 "<video class=\"h-full w-full object-cover opacity-[0.92]\" muted playsinline preload=\"metadata\">" +
                   "<source src=\"" + escapeHtml(src) + "\" type=\"video/mp4\" />" +
                 "</video>" +
-                "<span class=\"pointer-events-none absolute inset-0 flex items-center justify-center\">" +
-                  "<span class=\"inline-flex h-12 w-12 items-center justify-center rounded-full border border-wire/60 bg-ink/70 text-xs font-bold tracking-[0.2em] text-accent backdrop-blur-sm\">PLAY</span>" +
-                "</span>" +
+                "<span class=\"pointer-events-none absolute inset-x-3 bottom-3 inline-flex min-h-[44px] items-center justify-center border border-wire/70 bg-ink/70 px-6 text-[11px] font-bold uppercase tracking-[0.24em] text-accent backdrop-blur-sm\">Play</span>" +
+                "</div>" +
               "</button>"
             );
           })
