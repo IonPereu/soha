@@ -709,6 +709,47 @@
         return "★★★★★".slice(0, full) + "☆☆☆☆☆".slice(0, 5 - full);
       }
 
+      function formatRelativeTime(isoTime, fallback) {
+        var date = isoTime ? new Date(isoTime) : null;
+        if (!date || Number.isNaN(date.getTime())) {
+          return fallback || "";
+        }
+
+        var diffMs = date.getTime() - Date.now();
+        var absMs = Math.abs(diffMs);
+        var minute = 60 * 1000;
+        var hour = 60 * minute;
+        var day = 24 * hour;
+        var week = 7 * day;
+        var month = 30 * day;
+        var year = 365 * day;
+        var value;
+        var unit;
+
+        if (absMs < hour) {
+          value = Math.round(diffMs / minute);
+          unit = "minute";
+        } else if (absMs < day) {
+          value = Math.round(diffMs / hour);
+          unit = "hour";
+        } else if (absMs < week) {
+          value = Math.round(diffMs / day);
+          unit = "day";
+        } else if (absMs < month) {
+          value = Math.round(diffMs / week);
+          unit = "week";
+        } else if (absMs < year) {
+          value = Math.round(diffMs / month);
+          unit = "month";
+        } else {
+          value = Math.round(diffMs / year);
+          unit = "year";
+        }
+
+        if (value === 0) value = -1;
+        return new Intl.RelativeTimeFormat("ru", { numeric: "always" }).format(value, unit);
+      }
+
       function renderReviews(data) {
         var grid = document.getElementById("reviews-grid");
         if (!grid) return;
@@ -723,7 +764,9 @@
           var author = escapeHtml(rv.author_name || rv.author || "Гость");
           var text = escapeHtml(rv.text || rv.review || "");
           var rating = Number(rv.rating || 0);
-          var when = escapeHtml(rv.relative_time_description || rv.when || "");
+          var when = escapeHtml(
+            formatRelativeTime(rv.time, rv.relative_time_description || rv.when || "")
+          );
           var badge = initials(rv.author_name || rv.author || "");
           var delay = Math.min(idx * 0.04, 0.16);
 
