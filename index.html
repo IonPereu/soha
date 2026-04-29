@@ -443,7 +443,7 @@
 
         <div
           id="about-videos-grid"
-          class="grid gap-2 sm:gap-3 lg:gap-4 grid-cols-1 sm:grid-cols-2"
+          class="grid gap-3 sm:gap-4 lg:gap-5 grid-cols-1 sm:grid-cols-2"
           data-videos="media/About/0.mp4|media/About/1.mp4|media/About/2.mp4|media/About/3.mp4|media/About/4.mp4"
         ></div>
 
@@ -923,12 +923,12 @@
           .map(function (src) {
             var name = src.split("/").pop() || "video";
             return (
-              "<button type=\"button\" class=\"gallery-item gallery-offset reveal relative overflow-hidden bg-ink/40\" data-video-src=\"" + escapeHtml(src) + "\" aria-label=\"" + escapeHtml(name) + "\">" +
-                "<div class=\"relative aspect-video w-full\">" +
-                "<video class=\"h-full w-full object-cover opacity-[0.92]\" muted playsinline preload=\"metadata\">" +
-                  "<source src=\"" + escapeHtml(src) + "\" type=\"video/mp4\" />" +
-                "</video>" +
-                "<span class=\"pointer-events-none absolute inset-x-3 bottom-3 inline-flex min-h-[44px] items-center justify-center border border-wire/70 bg-ink/70 px-6 text-[11px] font-bold uppercase tracking-[0.24em] text-accent backdrop-blur-sm\">Play</span>" +
+              "<button type=\"button\" class=\"gallery-offset reveal mx-auto w-full max-w-[420px]\" data-video-src=\"" + escapeHtml(src) + "\" aria-label=\"" + escapeHtml(name) + "\">" +
+                "<div class=\"relative aspect-[9/16] w-full overflow-hidden rounded-xl bg-ink/40\">" +
+                  "<video class=\"h-full w-full object-cover opacity-[0.92]\" muted playsinline preload=\"metadata\">" +
+                    "<source src=\"" + escapeHtml(src) + "\" type=\"video/mp4\" />" +
+                  "</video>" +
+                  "<span class=\"pointer-events-none absolute inset-x-0 bottom-0 flex items-center justify-center border-t border-wire/40 bg-ink/70 px-6 py-3 text-[11px] font-bold uppercase tracking-[0.24em] text-accent backdrop-blur-sm\">Play</span>" +
                 "</div>" +
               "</button>"
             );
