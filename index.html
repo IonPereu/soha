@@ -622,6 +622,30 @@
     </a>
   </div>
 
+  <div
+    id="lightbox"
+    class="fixed inset-0 z-[999] hidden items-center justify-center bg-black/85 p-4"
+    role="dialog"
+    aria-modal="true"
+    aria-label="Просмотр изображения"
+  >
+    <button
+      id="lightbox-close"
+      type="button"
+      class="btn-wire absolute right-4 top-4 inline-flex h-11 w-11 items-center justify-center border border-wire/70 bg-ink/70 text-sm font-bold text-accent backdrop-blur-sm"
+      aria-label="Закрыть"
+    >
+      ✕
+    </button>
+    <img
+      id="lightbox-img"
+      alt=""
+      class="max-h-[90vh] w-auto max-w-[min(96vw,1100px)] object-contain"
+      loading="eager"
+      decoding="async"
+    />
+  </div>
+
   <script>
     (function () {
       var header = document.getElementById("site-header");
@@ -733,6 +757,45 @@
         }
       }
 
+      var lightbox = document.getElementById("lightbox");
+      var lightboxImg = document.getElementById("lightbox-img");
+      var lightboxClose = document.getElementById("lightbox-close");
+      var lightboxOpen = false;
+
+      function openLightbox(src, alt) {
+        if (!lightbox || !lightboxImg) return;
+        lightboxImg.src = src || "";
+        lightboxImg.alt = alt || "";
+        lightbox.classList.remove("hidden");
+        lightbox.classList.add("flex");
+        document.body.classList.add("overflow-hidden");
+        lightboxOpen = true;
+      }
+
+      function closeLightbox() {
+        if (!lightbox || !lightboxImg) return;
+        lightbox.classList.add("hidden");
+        lightbox.classList.remove("flex");
+        document.body.classList.remove("overflow-hidden");
+        lightboxImg.src = "";
+        lightboxOpen = false;
+      }
+
+      if (lightbox) {
+        lightbox.addEventListener("click", function (e) {
+          if (e.target === lightbox) closeLightbox();
+        });
+      }
+      if (lightboxClose) {
+        lightboxClose.addEventListener("click", function () {
+          closeLightbox();
+        });
+      }
+      document.addEventListener("keydown", function (e) {
+        if (!lightboxOpen) return;
+        if (e.key === "Escape") closeLightbox();
+      });
+
       var generalVideo = document.getElementById("gallery-general-video");
       if (generalVideo) {
         // Autoplay on page load (muted + playsinline).
@@ -774,6 +837,14 @@
           .join("");
 
         observeReveals(galleryPhotosGrid);
+
+        galleryPhotosGrid.addEventListener("click", function (e) {
+          var t = e.target;
+          if (!t) return;
+          var img = t.closest ? t.closest("img") : null;
+          if (!img || !galleryPhotosGrid.contains(img)) return;
+          openLightbox(img.currentSrc || img.src, img.alt || "");
+        });
       }
 
       function initials(name) {
