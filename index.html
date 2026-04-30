@@ -960,7 +960,9 @@
 
         function aboutGridPreviewSeconds(src) {
           var file = (String(src || "").split("/").pop() || "").toLowerCase();
-          if (file === "1.mp4" || file === "2.mp4" || file === "3.mp4") return 4;
+          if (file === "0.mp4") return 1;
+          if (file === "1.mp4" || file === "2.mp4" || file === "3.mp4") return 5;
+          if (file === "4.mp4") return 7;
           return 0;
         }
 
