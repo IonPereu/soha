@@ -958,6 +958,12 @@
         var rawVideos = aboutVideosGrid.getAttribute("data-videos") || "";
         var videos = rawVideos.split("|").map(function (s) { return String(s || "").trim(); }).filter(Boolean);
 
+        function aboutGridPreviewSeconds(src) {
+          var file = (String(src || "").split("/").pop() || "").toLowerCase();
+          if (file === "1.mp4" || file === "2.mp4" || file === "3.mp4") return 3;
+          return 0;
+        }
+
         aboutVideosGrid.innerHTML = videos
           .map(function (src) {
             var name = src.split("/").pop() || "video";
@@ -973,6 +979,27 @@
             );
           })
           .join("");
+
+        aboutVideosGrid.querySelectorAll("video").forEach(function (video) {
+          var btn = video.closest("[data-video-src]");
+          var want = aboutGridPreviewSeconds(btn ? btn.getAttribute("data-video-src") : "");
+          if (want <= 0) return;
+          function applyPreview() {
+            var d = video.duration;
+            var t = want;
+            if (isFinite(d) && d > 0) {
+              t = Math.min(want, Math.max(0, d - 0.05));
+            }
+            try {
+              video.currentTime = t;
+            } catch (e) {}
+          }
+          if (video.readyState >= 1) {
+            applyPreview();
+          } else {
+            video.addEventListener("loadedmetadata", applyPreview, { once: true });
+          }
+        });
 
         observeReveals(aboutVideosGrid);
 
