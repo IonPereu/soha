@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-05-05T05:32:48.441Z",
+  "updated_at": "2026-05-06T05:47:31.918Z",
   "source": "google_places_api",
   "place_id": "ChIJC3OUBQB9yUARjQBVWi-ZR1Q",
   "place_name": "SOHA BARBERSHOP",
@@ -9,7 +9,7 @@
     {
       "author_name": "Ion Pereu",
       "rating": 5,
-      "relative_time_description": "меньше недели назад",
+      "relative_time_description": "неделю назад",
       "text": "Отличный барбершоп! Очень приятная атмосфера. Мастера настоящие профессионалы учитывают все пожелания и дают полезные советы по уходу за волосами и бородой. Всегда ухожу довольным результатом. Рекомендую всем, кто ценит качество и хороший сервис!",
       "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocKyccVCtg6oKJhjoiIBoylDxKxzneT9V2BVuhR2_a7iCG7fxQ=s128-c0x00000000-cc-rp-mo",
       "time": "2026-04-28T18:45:25.540547050Z"
@@ -41,7 +41,7 @@
     {
       "author_name": "Никита Урсу",
       "rating": 5,
-      "relative_time_description": "3 недели назад",
+      "relative_time_description": "4 недели назад",
       "text": "Отличное место, вкусное кофе, отличная музыка и классные мастера.",
       "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocJ6dw97WCGxfuw9RC9Y2mKAaJqVUmw6EakGH9Me13Qstg6gcg=s128-c0x00000000-cc-rp-mo-ba3",
       "time": "2026-04-07T11:28:11.149137969Z"
