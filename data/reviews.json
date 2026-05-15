@@ -1,18 +1,18 @@
 {
-  "updated_at": "2026-05-14T06:13:49.406Z",
+  "updated_at": "2026-05-15T06:22:09.681Z",
   "source": "google_places_api",
   "place_id": "ChIJC3OUBQB9yUARjQBVWi-ZR1Q",
   "place_name": "SOHA BARBERSHOP",
   "rating": 5,
-  "user_ratings_total": 8,
+  "user_ratings_total": 9,
   "reviews": [
     {
-      "author_name": "Александр Романчук",
+      "author_name": "Ivan Panchenko",
       "rating": 5,
       "relative_time_description": "меньше недели назад",
-      "text": "",
-      "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocKubUaQdbiIghlmkcu9wcTKxTPYNRZiUUTdTuQOkyRFBcvBPQ=s128-c0x00000000-cc-rp-mo",
-      "time": "2026-05-13T05:21:56.588590367Z"
+      "text": "Лучший барбершоп с лучшими мастерами Кишинева",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjUk8DD9cjwEhcbThCcAxGHhej1aplRB_MxsXeQ_IKmaIQG-dBQV=s128-c0x00000000-cc-rp-mo-ba4",
+      "time": "2026-05-14T14:02:30.401552195Z"
     },
     {
       "author_name": "Ion Pereu",
