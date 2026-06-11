@@ -1,5 +1,5 @@
 {
-  "updated_at": "2026-06-10T06:56:39.208Z",
+  "updated_at": "2026-06-11T07:20:19.916Z",
   "source": "google_places_api",
   "place_id": "ChIJC3OUBQB9yUARjQBVWi-ZR1Q",
   "place_name": "SOHA BARBERSHOP",
@@ -13,14 +13,6 @@
       "text": "Все очень круто. Спасибо Владиславу",
       "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocL0NE1wbdyZJ59R4gDNkiqVv94uIEVlnkRUDMqhnKm2cO9cIA=s128-c0x00000000-cc-rp-mo",
       "time": "2026-05-28T11:36:01.457141773Z"
-    },
-    {
-      "author_name": "Ivan Panchenko",
-      "rating": 5,
-      "relative_time_description": "3 недели назад",
-      "text": "Лучший барбершоп с лучшими мастерами Кишинева",
-      "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjUk8DD9cjwEhcbThCcAxGHhej1aplRB_MxsXeQ_IKmaIQG-dBQV=s128-c0x00000000-cc-rp-mo-ba4",
-      "time": "2026-05-14T14:02:30.401552195Z"
     },
     {
       "author_name": "Ion Pereu",
@@ -45,6 +37,14 @@
       "text": "Местяк кайф, мастера суперские. Если думаете идти или не идти, не думайте - идите! Пришел очень патлатый, ушел человеком! Обязательно вернусь:)",
       "profile_photo_url": "https://lh3.googleusercontent.com/a-/ALV-UjXrTfDmZOtqF5Qru1UBw0TlN1G96fNogjvY5YiTuEQD04lnHFeZ=s128-c0x00000000-cc-rp-mo",
       "time": "2026-04-09T20:53:02.236404306Z"
+    },
+    {
+      "author_name": "Никита Урсу",
+      "rating": 5,
+      "relative_time_description": "2 месяца назад",
+      "text": "Отличное место, вкусное кофе, отличная музыка и классные мастера.",
+      "profile_photo_url": "https://lh3.googleusercontent.com/a/ACg8ocJ6dw97WCGxfuw9RC9Y2mKAaJqVUmw6EakGH9Me13Qstg6gcg=s128-c0x00000000-cc-rp-mo-ba3",
+      "time": "2026-04-07T11:28:11.149137969Z"
     }
   ]
 }
